@@ -20,7 +20,7 @@ const SignUpForm = () => {
             toast.success("Account created successfully!");
             navigate("/dashboard");  // Redirect to dashboard
         } catch (error) {
-            if (error.message.includes("Username already exists")) {
+            if (error.message.includes("Duplicate entry")) {
                 toast.error("Username is already in use.");
             } else {
                 toast.error("Sign up failed. Please try again.");

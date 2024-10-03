@@ -11,6 +11,7 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log('Submitting sign-up form');
             await handleLogin({ username, password });
             navigate("/dashboard");  // Redirect to dashboard
         } catch (error) {

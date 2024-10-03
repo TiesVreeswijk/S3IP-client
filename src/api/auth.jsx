@@ -30,10 +30,10 @@ export const signup = async (credentials) => {
             data = await response.json();
         } else {
             data = await response.text();
-            throw new Error(data);
         }
 
         if (response.ok) {
+            console.log("User registered successfully", data);
             return data.token;
         }
         throw new Error(data.message || "Signup failed");
