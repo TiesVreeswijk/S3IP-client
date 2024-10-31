@@ -1,21 +1,31 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const { handleLogin } = useAuth();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log('Submitting sign-up form');
-            await handleLogin({ username, password });
-            navigate("/dashboard");  // Redirect to dashboard
-        } catch (error) {
-            console.error("Login failed", error);
+            const response = await axios.post('https://localhost:44385/Auth/login', {
+                username,
+                password,
+            });
+            console.log('Login successful:', response.data);
+            // Handle successful login (e.g., store token)
+            navigate('/dashboard'); // Navigate to the dashboard page
+        } catch (err) {
+            if (err.response) {
+                console.error('Login failed:', err.response.data);
+                setError(err.response.data);
+            } else {
+                console.error('Login failed:', err.message);
+                setError('An error occurred. Please try again.');
+            }
         }
     };
 
@@ -42,6 +52,7 @@ const LoginForm = () => {
                         Log in
                     </button>
                 </form>
+                {error && <p className="mt-4 text-center text-red-500 text-sm">{error}</p>}
                 <p className="mt-4 text-center text-black text-sm">
                     Don’t have an account? <a href="/signup" className="text-blue-500 hover:underline">Sign up</a>
                 </p>

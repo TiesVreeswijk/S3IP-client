@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+//import { useAuth } from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -8,7 +8,7 @@ const SignUpForm = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const { handleSignUp } = useAuth();
+    //const { handleSignUp } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -16,7 +16,7 @@ const SignUpForm = () => {
         if (loading) return; // Prevent multiple submissions
         setLoading(true);
         try {
-            await handleSignUp({ username, password });
+            //await handleSignUp({ username, password });
             toast.success("Account created successfully!");
             navigate("/dashboard");  // Redirect to dashboard
         } catch (error) {
