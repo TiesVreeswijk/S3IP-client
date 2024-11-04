@@ -28,7 +28,6 @@ const LoginForm = () => {
             }
         }
     };
-
     return (
         <div className="flex justify-center items-center h-screen bg-gray-800">
             <div className="bg-gray-300 p-8 rounded-lg shadow-lg w-80">

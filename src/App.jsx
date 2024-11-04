@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import LoginForm from "./components/Auth/LoginForm";
 
 import SignupForm from "./components/auth/SignupForm.jsx";
+import TrainingBuilder from "./pages/TrainingBuilder.jsx";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/signup" element={<SignupForm />} />
                     <Route path="/dashboard" element={<Dashboard /> } />
+                    <Route path="/training-builder" element={<TrainingBuilder />} />
                 </Routes>
 
         </Router>

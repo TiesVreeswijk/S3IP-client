@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Modal from '../pages/Modal';
-// import { useAuth } from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
     const [exercises, setExercises] = useState({});
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [trainings, setTrainings] = useState([]);
-    // const { user } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('https://localhost:44385/api/Exercises')
@@ -19,17 +16,8 @@ const Dashboard = () => {
             });
     }, []);
 
-    const handleAddExerciseClick = () => {
-        if (user) {
-            axios.get(`https://localhost:44385/api/Training/user-trainings/${user.id}`)
-                .then(response => {
-                    setTrainings(response.data);
-                    setIsModalOpen(true);
-                })
-                .catch(error => {
-                    console.error('Error fetching trainings:', error);
-                });
-        }
+    const handleAddExerciseClick = (exerciseId) => {
+        navigate('/training-builder', { state: { exerciseId } });
     };
 
     return (
@@ -52,7 +40,7 @@ const Dashboard = () => {
                             />
                             <button
                                 className="bg-blue-500 text-white py-2 px-4 rounded"
-                                onClick={handleAddExerciseClick}
+                                onClick={() => handleAddExerciseClick(id)}
                             >
                                 Add Exercise
                             </button>
@@ -60,14 +48,6 @@ const Dashboard = () => {
                     );
                 })}
             </div>
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <h2 className="text-xl mb-4">User Trainings</h2>
-                <ul>
-                    {trainings.map((training) => (
-                        <li key={training.id}>{training.name}</li>
-                    ))}
-                </ul>
-            </Modal>
         </div>
     );
 };
