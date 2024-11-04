@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode';
+
 
 const TrainingBuilder = () => {
     const [trainings, setTrainings] = useState([]);
@@ -40,19 +40,16 @@ const TrainingBuilder = () => {
 
     const handleCreateTraining = async (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token');
         try {
-            const token = localStorage.getItem('token'); // Retrieve the token from local storage
+             // Retrieve the token from local storage
             if (!token) {
                 throw new Error('No token found');
             }
 
-            const decodedToken = jwtDecode(token);
-            const userid = decodedToken.userId;
-
             const payload = {
                 newTrainingName: newTrainingName,
-                timeCompleted: new Date().toISOString(),
-                userId: userid
+
             };
 
             console.log("Token before API call:", token);
@@ -60,14 +57,13 @@ const TrainingBuilder = () => {
 
             const response = await axios.post('https://localhost:44385/Training/create', payload, {
                 headers: {
-                    'Authorization': `Bearer ${token}` // Include the token in the request headers
+                    'Authorization': `Bearer ${token}`, // Include the token in the request headers
+                    'Content-Type': 'application/json'
                 }
             });
 
             console.log("Response:", response);
 
-            setTrainings([...trainings, response.data]);
-            setNewTrainingName('');
         } catch (error) {
             console.error('Error creating new training:', error);
             if (error.response) {

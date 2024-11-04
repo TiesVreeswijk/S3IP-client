@@ -22,11 +22,32 @@ const Dashboard = () => {
         navigate('/training-builder', { state: { exerciseId } });
     };
 
+    const handleGetProtectedClick = async () => {
+        const token = localStorage.getItem('token'); // Retrieve the token from local storage
+        console.log("Token before API call:", token);
+        try {
+            const response = await axios.post('https://localhost:44385/Training/protected', {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Include the token in the request headers
+                }
+            });
+            console.log('Protected data:', response.data);
+        } catch (error) {
+            console.error('Error fetching protected data:', error);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gray-800 py-8 flex flex-col items-center">
             <div className="w-full flex justify-end px-8">
                 <button className="bg-blue-500 text-white py-2 px-4 rounded">
                     View Training
+                </button>
+                <button
+                    className="bg-green-500 text-white py-2 px-4 rounded ml-4"
+                    onClick={handleGetProtectedClick}
+                >
+                    Get Protected
                 </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
