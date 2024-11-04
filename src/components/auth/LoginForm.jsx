@@ -16,7 +16,7 @@ const LoginForm = () => {
                 password,
             });
             console.log('Login successful:', response.data);
-            // Handle successful login (e.g., store token)
+            localStorage.setItem('token', response.data.token); // Store the token in local storage
             navigate('/dashboard'); // Navigate to the dashboard page
         } catch (err) {
             if (err.response) {

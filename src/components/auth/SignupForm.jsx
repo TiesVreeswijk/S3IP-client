@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 //import { useAuth } from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 const SignUpForm = () => {
     const [username, setUsername] = useState("");
@@ -16,12 +17,20 @@ const SignUpForm = () => {
         if (loading) return; // Prevent multiple submissions
         setLoading(true);
         try {
-            //await handleSignUp({ username, password });
+            await axios.post('https://localhost:44385/Auth/register', {
+                username,
+                password
+            });
             toast.success("Account created successfully!");
             navigate("/dashboard");  // Redirect to dashboard
         } catch (error) {
-            if (error.message.includes("Duplicate entry")) {
-                toast.error("Username is already in use.");
+            console.error('Error response:', error.response);
+            if (error.response && error.response.data && error.response.data.message) {
+                if (error.response.data.message.includes("Duplicate entry")) {
+                    toast.error("Username is already in use.");
+                } else {
+                    toast.error("Sign up failed. Please try again.");
+                }
             } else {
                 toast.error("Sign up failed. Please try again.");
             }
@@ -29,6 +38,7 @@ const SignUpForm = () => {
             setLoading(false);
         }
     };
+
 
     return (
         <div className="flex justify-center items-center h-screen bg-gray-800">

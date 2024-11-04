@@ -17,6 +17,8 @@ const Dashboard = () => {
     }, []);
 
     const handleAddExerciseClick = (exerciseId) => {
+        const token = localStorage.getItem('token'); // Retrieve the token from local storage
+        console.log("Token before API call:", token);
         navigate('/training-builder', { state: { exerciseId } });
     };
 
