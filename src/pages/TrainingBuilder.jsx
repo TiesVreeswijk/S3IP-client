@@ -21,24 +21,40 @@ const TrainingBuilder = () => {
         })
             .then(response => {
                 setTrainings(response.data);
+                console.log("trainings", trainings);
             })
             .catch(error => {
                 console.error('Error fetching trainings:', error);
             });
-    }, []);
+    }, );
 
-    const handleSubmit = async (e) => {
+    const handleAddExercise = async (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token');
         try {
-            await axios.post('https://localhost:44385/api/Training/add-exercise', {
-                trainingId: selectedTraining,
+
+            const payload = {
                 exerciseId,
-                sets,
-                reps
+                trainingId: selectedTraining,
+                sets: parseInt(sets, 10),
+                reps: parseInt(reps, 10)
+            };
+
+            console.log("payload", payload);
+
+            await axios.post('https://localhost:44385/Training/addExercise', payload, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             });
             navigate('/dashboard');
         } catch (error) {
             console.error('Error adding exercise to training:', error);
+            if (error.response) {
+                console.error('Response data:', error.response.data);
+                console.error('Response status:', error.response.status);
+                console.error('Response headers:', error.response.headers);
+            }
         }
     };
 
@@ -77,15 +93,19 @@ const TrainingBuilder = () => {
         <div className="flex justify-center items-center h-screen bg-gray-800">
             <div className="bg-gray-300 p-8 rounded-lg shadow-lg w-80">
                 <h2 className="text-2xl font-bold text-center mb-6 text-black">Add Exercise to Training</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleAddExercise} className="space-y-4">
                     <select
                         value={selectedTraining}
-                        onChange={(e) => setSelectedTraining(e.target.value)}
+                        onChange={(e) => {
+                            const selectedValue = e.target.value;
+                            console.log("Selected training:", selectedValue);
+                            setSelectedTraining(selectedValue);
+                        }}
                         className="w-full p-2 rounded-lg border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         <option value="">Select Training</option>
                         {trainings.map(training => (
-                            <option key={training.id} value={training.id}>{training.name}</option>
+                            <option key={training.trainingId} value={training.trainingId}>{training.name}</option>
                         ))}
                     </select>
                     <input
@@ -102,7 +122,8 @@ const TrainingBuilder = () => {
                         onChange={(e) => setReps(e.target.value)}
                         className="w-full p-2 rounded-lg border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                    <button type="submit"
+                            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
                         Add Exercise
                     </button>
                 </form>
