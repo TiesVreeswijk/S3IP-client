@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-
 const TrainingBuilder = () => {
     const [trainings, setTrainings] = useState([]);
     const [selectedTraining, setSelectedTraining] = useState('');
@@ -14,7 +13,12 @@ const TrainingBuilder = () => {
     const { exerciseId } = location.state;
 
     useEffect(() => {
-        axios.get('https://localhost:44385/api/Training/user-trainings')
+        const token = localStorage.getItem('token');
+        axios.get('https://localhost:44385/Training', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(response => {
                 setTrainings(response.data);
             })
@@ -42,28 +46,23 @@ const TrainingBuilder = () => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         try {
-             // Retrieve the token from local storage
             if (!token) {
                 throw new Error('No token found');
             }
 
             const payload = {
                 newTrainingName: newTrainingName,
-
             };
-
-            console.log("Token before API call:", token);
-            console.log("Request payload:", payload);
 
             const response = await axios.post('https://localhost:44385/Training/create', payload, {
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Include the token in the request headers
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
             });
 
-            console.log("Response:", response);
-
+            setTrainings([...trainings, response.data]);
+            setNewTrainingName('');
         } catch (error) {
             console.error('Error creating new training:', error);
             if (error.response) {
@@ -71,7 +70,6 @@ const TrainingBuilder = () => {
                 console.error('Response status:', error.response.status);
                 console.error('Response headers:', error.response.headers);
             }
-
         }
     };
 
