@@ -8,6 +8,7 @@ const TrainingBuilder = () => {
     const [sets, setSets] = useState('');
     const [reps, setReps] = useState('');
     const [newTrainingName, setNewTrainingName] = useState('');
+    const [reloadTrainings, setReloadTrainings] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const { exerciseId } = location.state;
@@ -21,18 +22,17 @@ const TrainingBuilder = () => {
         })
             .then(response => {
                 setTrainings(response.data);
-                console.log("trainings", trainings);
+                console.log("trainings", response.data);
             })
             .catch(error => {
                 console.error('Error fetching trainings:', error);
             });
-    }, );
+    }, [reloadTrainings]); // Add reloadTrainings to dependency array
 
     const handleAddExercise = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         try {
-
             const payload = {
                 exerciseId,
                 trainingId: selectedTraining,
@@ -79,6 +79,7 @@ const TrainingBuilder = () => {
 
             setTrainings([...trainings, response.data]);
             setNewTrainingName('');
+            setReloadTrainings(!reloadTrainings); // Toggle reloadTrainings to trigger useEffect
         } catch (error) {
             console.error('Error creating new training:', error);
             if (error.response) {
