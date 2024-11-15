@@ -41,11 +41,11 @@ const Sidebar = () => {
                         </li>
                         <li>
                             <Link
-                                to="/profile"
+                                to="training-overview"
                                 className="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-300"
                                 onClick={toggleSidebar}
                             >
-                                <span className="text-lg font-semibold">Profile</span>
+                                <span className="text-lg font-semibold">Trainings</span>
                             </Link>
                         </li>
                         <li>

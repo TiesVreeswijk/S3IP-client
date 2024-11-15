@@ -4,6 +4,7 @@ import LoginForm from "./components/Auth/LoginForm";
 import SignupForm from "./components/auth/SignupForm.jsx";
 import TrainingBuilder from "./pages/TrainingBuilder.jsx";
 import Sidebar from "./components/Sidebar";
+import TrainingOverview from "./pages/TrainingOverview";
 
 function App() {
     const location = useLocation();
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/signup" element={<SignupForm />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/training-builder" element={<TrainingBuilder />} />
+                    <Route path="/training-overview" element={<TrainingOverview />} />
                 </Routes>
             </div>
         </div>
