@@ -79,8 +79,9 @@ const TrainingOverview = () => {
                     <h3 className="text-xl font-bold text-center mb-4 text-black">Exercises</h3>
                     <ul>
                         {trainingExercises.map(exercise => (
-                            <li key={exercise.id} className="text-black">
-                                <p>Name: {exercise.name}</p>
+                            <li key={exercise.id} className="text-black mb-4 p-4 border border-gray-400 rounded-lg bg-white">
+                                <img src={exercise.imageUrl} alt={exercise.name} className="w-24 h-24 bg-gray-300 rounded-md mb-2"/>
+                                <p className="font-bold">Name: {exercise.name}</p>
                                 <p>Sets: {exercise.sets}</p>
                                 <p>Reps: {exercise.reps}</p>
                             </li>

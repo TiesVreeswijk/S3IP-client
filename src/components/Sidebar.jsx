@@ -26,7 +26,7 @@ const Sidebar = () => {
                 } transition-transform duration-300`}
             >
                 <div className="p-6 text-2xl font-bold border-b border-gray-700 flex items-center justify-center">
-                    <span className="text-blue-400">MyApp</span>
+                    <span className="text-blue-400">LiftMate</span>
                 </div>
                 <nav className="flex-1 p-6 space-y-4">
                     <ul>
