@@ -8,6 +8,7 @@ const TrainingOverview = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
+
         axios.get('https://localhost:44385/Training', {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -21,22 +22,38 @@ const TrainingOverview = () => {
             });
     }, []);
 
-    useEffect(() => {
-        if (selectedTraining) {
-            const token = localStorage.getItem('token');
-            axios.get(`https://localhost:44385/trainingexercises?trainingId=${selectedTraining}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-                .then(response => {
-                    setTrainingExercises(response.data);
-                })
-                .catch(error => {
-                    console.error('Error fetching training exercises:', error);
-                });
+    const loadTrainingExercises = async (e) => {
+        e.preventDefault();
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error("Token not found in localStorage");
+            return;
         }
-    }, [selectedTraining]);
+
+        try {
+            console.log("Sending request with selectedTraining:", selectedTraining);
+
+            const response = await axios.get('https://localhost:44385/Training/getTrainingById', {
+                params: { id: selectedTraining }, // Ensure 'id' matches backend parameter
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            console.log("Training exercises fetched successfully:", response.data);
+            setTrainingExercises(response.data); // Update state with fetched exercises
+        } catch (error) {
+            console.error("Error in Axios request:", error);
+            if (error.response) {
+                console.error("Response data:", error.response.data);
+                console.error("Response status:", error.response.status);
+                console.error("Response headers:", error.response.headers);
+            } else {
+                console.error("Error details:", error.message);
+            }
+        }
+    };
 
     return (
         <div className="flex justify-center items-center h-screen bg-gray-800">
@@ -52,11 +69,21 @@ const TrainingOverview = () => {
                         <option key={training.trainingId} value={training.trainingId}>{training.name}</option>
                     ))}
                 </select>
+                <button
+                    onClick={loadTrainingExercises}
+                    className="w-full mt-4 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+                >
+                    Load Training
+                </button>
                 <div className="mt-4">
                     <h3 className="text-xl font-bold text-center mb-4 text-black">Exercises</h3>
                     <ul>
                         {trainingExercises.map(exercise => (
-                            <li key={exercise.id} className="text-black">{exercise.name}</li>
+                            <li key={exercise.id} className="text-black">
+                                <p>Name: {exercise.name}</p>
+                                <p>Sets: {exercise.sets}</p>
+                                <p>Reps: {exercise.reps}</p>
+                            </li>
                         ))}
                     </ul>
                 </div>
