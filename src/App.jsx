@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import {Route, Routes, useLocation } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import LoginForm from "./components/Auth/LoginForm";
+import LoginForm from './components/auth/LoginForm';
 import SignupForm from "./components/auth/SignupForm.jsx";
 import TrainingBuilder from "./pages/TrainingBuilder.jsx";
 import Sidebar from "./components/Sidebar";
