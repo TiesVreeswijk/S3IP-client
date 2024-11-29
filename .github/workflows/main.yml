@@ -53,15 +53,6 @@ jobs:
       - name: Checkout code (optional)
         uses: actions/checkout@v3
 
-      - name: Log in to Azure with Username/Password
-        uses: azure/login@v1
-        with:
-          auth-type: 'user'
-          client-id: ${{ secrets.AZURE_USERNAME }}
-          client-secret: ${{ secrets.AZURE_PASSWORD }}
-          tenant-id: c66b6765-b794-4a2b-84ed-845b341c086a  # Required if your account is part of multiple tenants
-          subscription-id: ba3fdaf5-2990-435c-965e-3ed564d4ff3f
-
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
