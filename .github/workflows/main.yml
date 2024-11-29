@@ -46,12 +46,16 @@ jobs:
         run: docker push ${{ secrets.DOCKER_USERNAME }}/reactapp:latest
 
   deploy:
-    needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code (optional)
+      - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Log in to Azure with Service Principal
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
