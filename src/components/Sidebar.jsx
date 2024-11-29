@@ -36,7 +36,7 @@ const Sidebar = () => {
                                 className="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-300"
                                 onClick={toggleSidebar} // Close sidebar when link is clicked
                             >
-                                <span className="text-lg font-semibold">Dashboard</span> //test
+                                <span className="text-lg font-semibold">Dashboard</span>
                             </Link>
                         </li>
                         <li>
