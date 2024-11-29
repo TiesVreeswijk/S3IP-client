@@ -46,19 +46,23 @@ jobs:
         run: docker push ${{ secrets.DOCKER_USERNAME }}/reactapp:latest
 
   deploy:
-    needs: build  # Ensures the deployment runs after the build job
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code (optional for deployment)
-      uses: actions/checkout@v3
+      - name: Checkout code (optional)
+        uses: actions/checkout@v3
 
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: Liftmate  # Replace with your Azure Web App name
-        slot-name: production               # Use production or staging, as needed
-        images: ${{ secrets.DOCKER_USERNAME }}/liftmate:latest
-        registry-url: https://index.docker.io/v1/  # Docker Hub URL
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Log in to Azure with Username/Password
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_USERNAME }}
+          client-secret: ${{ secrets.AZURE_PASSWORD }}
+          tenant-id: c66b6765-b794-4a2b-84ed-845b341c086a  # Required if your account is part of multiple tenants
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: Liftmate
+          slot-name: production
+          images: ${{ secrets.DOCKER_USERNAME }}/reactapp:latest
