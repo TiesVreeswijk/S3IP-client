@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
     const [exercises, setExercises] = useState([]);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Use the navigate hook to navigate to another page
 
     useEffect(() => {
         axios.get('https://localhost:44385/api/Exercises')
@@ -19,7 +19,7 @@ const Dashboard = () => {
     const handleAddExerciseClick = (exerciseId) => {
         const token = localStorage.getItem('token'); // Retrieve the token from local storage
         console.log("Token before API call:", token);
-        console.log("Exercise ID:", exerciseId);
+        console.log("Exercise ID:", exerciseId); // Log the exercise ID to the console
         navigate('/training-builder', { state: { exerciseId } });
     };
 
