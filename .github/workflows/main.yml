@@ -18,9 +18,6 @@ jobs:
         with:
           node-version: '20.17.0'
 
-      - name: Set Node Environment
-        run: echo "NODE_ENV=production" >> $GITHUB_ENV
-
       - name: Install dependencies
         run: npm install
 
