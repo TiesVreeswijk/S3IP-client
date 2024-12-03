@@ -3,10 +3,7 @@ name: CI/CD Pipeline for React App
 on:
   push:
     branches:
-      - master
-  pull_request:
-    branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -16,23 +13,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set CI to false
-        run: echo "CI=false" >> $GITHUB_ENV
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.14.0'
+          node-version: '20.17.0'
+
+      - name: Set Node Environment
+        run: echo "NODE_ENV=production" >> $GITHUB_ENV
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Install babel
-        run: npm install --save-dev @babel/plugin-proposal-private-property-in-object
-
-      - name: Build the React app
+      - name: Build project
         run: npm run build
 
+      - name: Debug CSS output
+        run: ls -lh dist/assets/*.css
+        
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/reactapp:v2 .
 
