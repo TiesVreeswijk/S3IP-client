@@ -1,6 +1,9 @@
 # Step 1: Build the React app
 FROM node:20.17.0 AS builder
 WORKDIR /app
+
+ENV NODE_ENV=production
+
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
