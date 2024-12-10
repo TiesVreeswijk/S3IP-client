@@ -31,7 +31,7 @@ jobs:
         run: ls -lh dist/assets/*.css
         
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/reactapp:v2 .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/reactapp:${{ github.sha }} .
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -40,7 +40,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/reactapp:v2
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/reactapp:${{ github.sha }}
 
   deploy:
     needs: build
@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: Liftmate
           slot-name: production
-          images: ${{ secrets.DOCKER_USERNAME }}/reactapp:v2
+          images: ${{ secrets.DOCKER_USERNAME }}/reactapp:${{ github.sha }}
