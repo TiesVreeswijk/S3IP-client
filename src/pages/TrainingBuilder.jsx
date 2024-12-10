@@ -15,7 +15,7 @@ const TrainingBuilder = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        axios.get('https://localhost:44385/Training', {
+        axios.get('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Training', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -42,7 +42,7 @@ const TrainingBuilder = () => {
 
             console.log("payload", payload);
 
-            await axios.post('https://localhost:44385/Training/addExercise', payload, {
+            await axios.post('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Training/addExercise', payload, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -70,7 +70,7 @@ const TrainingBuilder = () => {
                 newTrainingName: newTrainingName,
             };
 
-            const response = await axios.post('https://localhost:44385/Training/create', payload, {
+            const response = await axios.post('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Training/create', payload, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'

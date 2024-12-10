@@ -9,7 +9,7 @@ const TrainingOverview = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
 
-        axios.get('https://localhost:44385/Training', {
+        axios.get('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Training', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -34,7 +34,7 @@ const TrainingOverview = () => {
         try {
             console.log("Sending request with selectedTraining:", selectedTraining);
 
-            const response = await axios.get('https://localhost:44385/Training/getTrainingById', {
+            const response = await axios.get('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Training/getTrainingById', {
                 params: { id: selectedTraining }, // Ensure 'id' matches backend parameter
                 headers: {
                     'Authorization': `Bearer ${token}`,
