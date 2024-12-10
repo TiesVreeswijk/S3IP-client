@@ -17,7 +17,8 @@ const TrainingBuilder = () => {
         const token = localStorage.getItem('token');
         axios.get('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Training', {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'content-type': 'application/json'
             }
         })
             .then(response => {
@@ -44,7 +45,8 @@ const TrainingBuilder = () => {
 
             await axios.post('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Training/addExercise', payload, {
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'content-type': 'application/json'
                 }
             });
             navigate('/dashboard');
