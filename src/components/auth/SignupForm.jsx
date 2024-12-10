@@ -17,7 +17,7 @@ const SignUpForm = () => {
         if (loading) return; // Prevent multiple submissions
         setLoading(true);
         try {
-            await axios.post('https://localhost:44385/Auth/register', {
+            await axios.post('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Auth/register', {
                 username,
                 password
             });

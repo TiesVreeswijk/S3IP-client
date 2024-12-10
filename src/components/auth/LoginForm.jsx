@@ -11,7 +11,7 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://localhost:44385/Auth/login', {
+            const response = await axios.post('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Auth/login', {
                 username,
                 password,
             });

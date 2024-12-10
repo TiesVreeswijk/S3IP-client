@@ -7,7 +7,7 @@ const Dashboard = () => {
     const navigate = useNavigate(); // Use the navigate hook to navigate to another page
 
     useEffect(() => {
-        axios.get('https://localhost:44385/api/Exercises')
+        axios.get('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/api/Exercises')
             .then(response => {
                 setExercises(response.data);
             })
