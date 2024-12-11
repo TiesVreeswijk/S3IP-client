@@ -18,15 +18,14 @@ jobs:
         with:
           node-version: '20.17.0'
 
-      - name: Set Node Environment
-        run: echo "NODE_ENV=production" >> $GITHUB_ENV
-
       - name: Install dependencies
         run: npm install
 
-      - name: Build project
-        run: npm run build
-
+      - name: Build project and add tailwind
+        run: |
+          npm run build
+          npx tailwindcss -i src/index.css -o ./dist/output.css --minify
+          sed -i 's|</head>|<link rel="stylesheet" href="./output.css">\n</head>|' dist/index.html
       - name: Debug CSS output
         run: ls -lh dist/assets/*.css
         
