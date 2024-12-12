@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
 const TrainingOverview = () => {
     const [trainings, setTrainings] = useState([]);
     const [selectedTraining, setSelectedTraining] = useState('');
     const [trainingExercises, setTrainingExercises] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -55,6 +58,32 @@ const TrainingOverview = () => {
         }
     };
 
+    const getUserIdFromToken = (token) => {
+        const decodedToken = jwt_decode(token);
+        return decodedToken.userId;
+    };
+
+    const handleViewTrainingUser = async () => {
+        const token = localStorage.getItem('token');
+        const userId = getUserIdFromToken(token);
+
+        try {
+            const response = await axios.post('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Training/createTrainingSession', {
+                trainingId: selectedTraining,
+                userId: userId
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            console.log('Training session created successfully:', response.data);
+            navigate('/training-user', { state: { trainingId: selectedTraining } });
+        } catch (error) {
+            console.error('Error creating training session:', error);
+        }
+    };
+
     return (
         <div className="flex justify-center items-center h-screen bg-gray-800">
             <div className="bg-gray-300 p-8 rounded-lg shadow-lg w-80">
@@ -88,6 +117,12 @@ const TrainingOverview = () => {
                         ))}
                     </ul>
                 </div>
+                <button
+                    onClick={handleViewTrainingUser}
+                    className="w-full mt-4 p-2 bg-green-500 text-white rounded-lg hover:bg-green-700 transition duration-300"
+                >
+                    Use Training
+                </button>
             </div>
         </div>
     );
