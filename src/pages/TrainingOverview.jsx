@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 
 const TrainingOverview = () => {
     const [trainings, setTrainings] = useState([]);
@@ -59,8 +59,8 @@ const TrainingOverview = () => {
     };
 
     const getUserIdFromToken = (token) => {
-        const decodedToken = jwt_decode(token);
-        return decodedToken.userId;
+        const decodedToken = jwtDecode(token);
+        return decodedToken.sub;
     };
 
     const handleViewTrainingUser = async () => {
