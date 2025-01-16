@@ -35,7 +35,7 @@ const Dashboard = () => {
                     <div key={exercise.id} className="flex flex-col items-center">
                         <h3 className="text-white mb-2">{exercise.name}</h3>
                         <img
-                            src={exercise.ImageUrl}
+                            src={exercise.imageUrl}
                             alt={exercise.description}
                             className="w-24 h-24 bg-gray-300 rounded-md mb-2"
                         />

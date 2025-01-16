@@ -77,12 +77,22 @@ const TrainingOverview = () => {
                 },
             });
 
+            const trainingSessionId = response.data.trainingSessionId;  // Assuming the backend returns this
+
             console.log('Training session created successfully:', response.data);
-            navigate('/training-user', { state: { trainingId: selectedTraining } });
+
+            // Pass both trainingId and trainingSessionId to the next page
+            navigate('/training-user', {
+                state: {
+                    trainingId: selectedTraining,
+                    trainingSessionId: trainingSessionId
+                }
+            });
         } catch (error) {
             console.error('Error creating training session:', error);
         }
     };
+
 
     return (
         <div className="flex justify-center items-center h-screen bg-gray-800">

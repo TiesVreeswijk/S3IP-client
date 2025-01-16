@@ -38,14 +38,17 @@ const TrainingUser = () => {
         const token = localStorage.getItem('token');
         const weight = weights[exercise.id] || 0;
 
+        const payload = {
+            trainingSessionId,
+            exerciseId: exercise.id,
+            weight,
+            sets: exercise.sets,
+            reps: exercise.reps
+        };
+        console.log(payload);
+
         try {
-            await axios.post('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Training/saveExercise', {
-                trainingSessionId,
-                exerciseId: exercise.id,
-                weight,
-                sets: exercise.sets,
-                reps: exercise.reps
-            }, {
+            await axios.post('https://liftmateapi-ake2erecctdaf8d0.westeurope-01.azurewebsites.net/Training/saveExercise', payload,{
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
