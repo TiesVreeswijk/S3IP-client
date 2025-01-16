@@ -131,7 +131,7 @@ const TrainingOverview = () => {
                     onClick={handleViewTrainingUser}
                     className="w-full mt-4 p-2 bg-green-500 text-white rounded-lg hover:bg-green-700 transition duration-300"
                 >
-                    Use Training
+                    Use This Training
                 </button>
             </div>
         </div>
